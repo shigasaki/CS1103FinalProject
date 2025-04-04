@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 class DatabaseManager {
     private static Connection connection;
@@ -645,5 +647,63 @@ class DatabaseManager {
         }
         
         return false;
+    }
+    
+    public static boolean hasAppointmentConflict(int doctorId, LocalDate date, LocalTime time) {
+        String sql = "SELECT COUNT(*) FROM Appointments " +
+                     "WHERE DoctorID = ? AND AppointmentDate = ? AND AppointmentTime = ? " +
+                     "AND Status != 'Cancelled'";
+        
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, doctorId);
+            pstmt.setDate(2, Date.valueOf(date));
+            pstmt.setTime(3, Time.valueOf(time));
+            
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking appointment conflict: " + e.getMessage());
+        }
+        return false;
+    }
+
+    // New method to get available time slots
+    public static List<LocalTime> getAvailableTimeSlots(int doctorId, LocalDate date) {
+        List<LocalTime> availableSlots = new ArrayList<>();
+        List<LocalTime> bookedSlots = new ArrayList<>();
+        
+        // Standard work hours (9am-5pm with 30-minute slots)
+        LocalTime startTime = LocalTime.of(9, 0);
+        LocalTime endTime = LocalTime.of(17, 0);
+        
+        // Get all booked appointments for the doctor on this date
+        String sql = "SELECT AppointmentTime FROM Appointments " +
+                     "WHERE DoctorID = ? AND AppointmentDate = ? AND Status != 'Cancelled'";
+        
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, doctorId);
+            pstmt.setDate(2, Date.valueOf(date));
+            
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                bookedSlots.add(rs.getTime("AppointmentTime").toLocalTime());
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving booked time slots: " + e.getMessage());
+            return availableSlots;
+        }
+        
+        // Generate available slots
+        LocalTime current = startTime;
+        while (current.isBefore(endTime)) {
+            if (!bookedSlots.contains(current) && !hasAppointmentConflict(doctorId, date, current)) {
+                availableSlots.add(current);
+            }
+            current = current.plusMinutes(30);
+        }
+        
+        return availableSlots;
     }
 }

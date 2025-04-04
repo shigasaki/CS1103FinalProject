@@ -366,7 +366,69 @@ public class HospitalManagementCLI {
         }
     }
 
-    // Appointment Management
+    private static void scheduleAppointment() {
+        System.out.println("\n=== SCHEDULE NEW APPOINTMENT ===");
+        
+        // Display patients for reference
+        displayAllPatients();
+        int patientId = getIntInput("Enter Patient ID: ");
+        
+        // Display doctors for reference
+        displayAllDoctors();
+        int doctorId = getIntInput("Enter Doctor ID: ");
+        
+        LocalDate date = getDateInput("Enter Appointment Date (YYYY-MM-DD): ");
+        
+        // Show available time slots for the doctor on this date
+        List<LocalTime> availableSlots = DatabaseManager.getAvailableTimeSlots(doctorId, date);
+        if (availableSlots.isEmpty()) {
+            System.out.println("No available time slots for this doctor on " + date);
+            return;
+        }
+        
+        System.out.println("\nAvailable Time Slots:");
+        for (int i = 0; i < availableSlots.size(); i++) {
+            System.out.println((i + 1) + ". " + availableSlots.get(i));
+        }
+        
+        int slotChoice = getIntInput("Choose a time slot (1-" + availableSlots.size() + "): ");
+        if (slotChoice < 1 || slotChoice > availableSlots.size()) {
+            System.out.println("Invalid time slot choice.");
+            return;
+        }
+        
+        LocalTime time = availableSlots.get(slotChoice - 1);
+        String notes = getOptionalStringInput("Enter Notes (press Enter to skip): ");
+
+        Appointment newAppointment = new Appointment(0, patientId, doctorId, date, time, "Scheduled", notes);
+        boolean success = DatabaseManager.addAppointment(newAppointment);
+        
+        if (success) {
+            System.out.println("Appointment scheduled successfully for " + date + " at " + time + "!");
+        } else {
+            System.out.println("Failed to schedule appointment.");
+        }
+    }
+
+    // New method to check doctor availability
+    private static void checkDoctorAvailability() {
+        System.out.println("\n=== CHECK DOCTOR AVAILABILITY ===");
+        displayAllDoctors();
+        int doctorId = getIntInput("Enter Doctor ID: ");
+        LocalDate date = getDateInput("Enter date to check availability (YYYY-MM-DD): ");
+        
+        List<LocalTime> availableSlots = DatabaseManager.getAvailableTimeSlots(doctorId, date);
+        if (availableSlots.isEmpty()) {
+            System.out.println("\nNo available time slots for this doctor on " + date);
+        } else {
+            System.out.println("\nAvailable Time Slots on " + date + ":");
+            for (LocalTime slot : availableSlots) {
+                System.out.println("- " + slot);
+            }
+        }
+    }
+
+    // Updated appointmentManagement menu
     private static void appointmentManagement() {
         while (true) {
             System.out.println("\n=== APPOINTMENT MANAGEMENT ===");
@@ -376,7 +438,8 @@ public class HospitalManagementCLI {
             System.out.println("4. Update Appointment");
             System.out.println("5. Cancel Appointment");
             System.out.println("6. Mark Appointment as Completed");
-            System.out.println("7. Back to Main Menu");
+            System.out.println("7. Check Doctor Availability");
+            System.out.println("8. Back to Main Menu");
 
             int choice = getIntInput("Enter your choice: ");
 
@@ -387,7 +450,8 @@ public class HospitalManagementCLI {
                 case 4 -> updateAppointment();
                 case 5 -> cancelAppointment();
                 case 6 -> completeAppointment();
-                case 7 -> { return; }
+                case 7 -> checkDoctorAvailability();
+                case 8 -> { return; }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
@@ -448,31 +512,6 @@ public class HospitalManagementCLI {
             }
         } else {
             System.out.println("Appointment not found with ID: " + appointmentId);
-        }
-    }
-
-    private static void scheduleAppointment() {
-        System.out.println("\n=== SCHEDULE NEW APPOINTMENT ===");
-        
-        // Display patients for reference
-        displayAllPatients();
-        int patientId = getIntInput("Enter Patient ID: ");
-        
-        // Display doctors for reference
-        displayAllDoctors();
-        int doctorId = getIntInput("Enter Doctor ID: ");
-        
-        LocalDate date = getDateInput("Enter Appointment Date (YYYY-MM-DD): ");
-        LocalTime time = getTimeInput("Enter Appointment Time (HH:MM): ");
-        String notes = getOptionalStringInput("Enter Notes (press Enter to skip): ");
-
-        Appointment newAppointment = new Appointment(0, patientId, doctorId, date, time, "Scheduled", notes);
-        boolean success = DatabaseManager.addAppointment(newAppointment);
-        
-        if (success) {
-            System.out.println("Appointment scheduled successfully!");
-        } else {
-            System.out.println("Failed to schedule appointment.");
         }
     }
 

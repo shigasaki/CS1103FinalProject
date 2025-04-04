@@ -20,10 +20,10 @@ INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, AppointmentTime,
 (1, 1, '2025-06-15', '09:00:00', 'Scheduled', 'Annual checkup'),
 (2, 2, '2025-06-15', '10:30:00', 'Completed', 'Vaccination'),
 (3, 3, '2025-06-16', '14:00:00', 'Scheduled', 'Knee pain'),
-(4, 1, '2025-06-17', '11:15:00', 'Completed', 'Follow-up'),
-(5, 2, '2025-06-18', '13:45:00', 'Completed', 'Child exam'),
+(4, 1, '2025-06-17', '11:30:00', 'Completed', 'Follow-up'),
+(5, 2, '2025-06-18', '13:40:00', 'Completed', 'Child exam'),
 (6, 3, '2025-06-19', '15:30:00', 'Scheduled', 'Back pain'),
-(1, 2, '2025-06-20', '08:45:00', 'Scheduled', 'Consultation'),
+(1, 2, '2025-06-20', '09:30:00', 'Scheduled', 'Consultation'),
 (2, 3, '2025-06-21', '16:00:00', 'Completed', 'X-ray review');
 
 -- 5 Billings (only Paid/Unpaid)
