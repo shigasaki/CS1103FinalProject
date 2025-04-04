@@ -1,0 +1,35 @@
+USE HospitalManagementSystem;
+
+-- 6 Patients
+INSERT INTO Patients (FirstName, LastName, DOB, Gender, Email, PhoneNumber, Address) VALUES
+('John', 'Smith', '1985-04-12', 'Male', 'john.smith@email.com', '555-123-4567', '123 Main St'),
+('Emily', 'Johnson', '1990-11-23', 'Female', 'emily.j@email.com', '555-234-5678', '456 Oak Ave'),
+('Michael', 'Williams', '1978-07-15', 'Male', NULL, '555-345-6789', '789 Pine Rd'),
+('Sarah', 'Brown', '1995-02-28', 'Female', 'sarah.b@email.com', '555-456-7890', '321 Elm St'),
+('James', 'Davis', '1982-09-05', 'Male', 'j.davis@email.com', '555-567-8901', '654 Maple Dr'),
+('Olivia', 'Miller', '1975-12-18', 'Female', NULL, '555-678-9012', '987 Cedar Ln');
+
+-- 3 Doctors
+INSERT INTO Doctors (FirstName, LastName, Email, PhoneNumber, Specialty, Salary) VALUES
+('Robert', 'Chen', 'dr.chen@hospital.com', '555-111-2222', 'Cardiology', 185000.00),
+('Lisa', 'Patel', 'dr.patel@hospital.com', '555-222-3333', 'Pediatrics', 165000.00),
+('David', 'Wilson', 'dr.wilson@hospital.com', '555-333-4444', 'Orthopedics', 175000.00);
+
+-- 8 Appointments (only Scheduled/Completed)
+INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, AppointmentTime, Status, Notes) VALUES
+(1, 1, '2025-06-15', '09:00:00', 'Scheduled', 'Annual checkup'),
+(2, 2, '2025-06-15', '10:30:00', 'Completed', 'Vaccination'),
+(3, 3, '2025-06-16', '14:00:00', 'Scheduled', 'Knee pain'),
+(4, 1, '2025-06-17', '11:15:00', 'Completed', 'Follow-up'),
+(5, 2, '2025-06-18', '13:45:00', 'Completed', 'Child exam'),
+(6, 3, '2025-06-19', '15:30:00', 'Scheduled', 'Back pain'),
+(1, 2, '2025-06-20', '08:45:00', 'Scheduled', 'Consultation'),
+(2, 3, '2025-06-21', '16:00:00', 'Completed', 'X-ray review');
+
+-- 5 Billings (only Paid/Unpaid)
+INSERT INTO Billings (AppointmentID, Amount, PaymentStatus) VALUES
+(2, 150.00, 'Paid'),
+(4, 200.00, 'Paid'),
+(5, 175.00, 'Unpaid'),
+(7, 120.00, 'Paid'),
+(8, 300.00, 'Unpaid');

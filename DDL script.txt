@@ -1,0 +1,46 @@
+CREATE DATABASE IF NOT EXISTS HospitalManagementSystem;
+USE HospitalManagementSystem;
+
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    DOB DATE NOT NULL,
+    Gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    Email VARCHAR(100),
+    PhoneNumber VARCHAR(20) NOT NULL,
+    Address VARCHAR(200)
+);
+  
+CREATE TABLE Doctors (
+    DoctorID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100),
+    PhoneNumber VARCHAR(20) NOT NULL,
+    Specialty VARCHAR(100) NOT NULL,
+    Salary DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE Appointments (
+    AppointmentID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT NOT NULL,
+    DoctorID INT NOT NULL,
+    AppointmentDate DATE NOT NULL,
+    AppointmentTime TIME NOT NULL,
+    Status ENUM('Scheduled', 'Completed') DEFAULT 'Scheduled',
+    Notes TEXT,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+CREATE TABLE Billings (
+    BillingID INT PRIMARY KEY AUTO_INCREMENT,
+    AppointmentID INT,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Tax DECIMAL(10, 2) GENERATED ALWAYS AS (Amount * 0.05) STORED,
+    TotalAmount DECIMAL(10, 2) GENERATED ALWAYS AS (Amount * 1.05) STORED,
+    BillingDate DATE DEFAULT (CURDATE()),
+    PaymentStatus ENUM('Paid', 'Unpaid') DEFAULT 'Unpaid',
+    FOREIGN KEY (AppointmentID) REFERENCES Appointments(AppointmentID)
+);
