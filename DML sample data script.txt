@@ -1,35 +1,210 @@
-USE HospitalManagementSystem;
+-- Clear existing data (if needed)
+DELETE FROM Billings;
+DELETE FROM Appointments;
+DELETE FROM Doctors;
+DELETE FROM Patients;
 
--- 6 Patients
-INSERT INTO Patients (FirstName, LastName, DOB, Gender, Email, PhoneNumber, Address) VALUES
-('John', 'Smith', '1985-04-12', 'Male', 'john.smith@email.com', '555-123-4567', '123 Main St'),
-('Emily', 'Johnson', '1990-11-23', 'Female', 'emily.j@email.com', '555-234-5678', '456 Oak Ave'),
-('Michael', 'Williams', '1978-07-15', 'Male', NULL, '555-345-6789', '789 Pine Rd'),
-('Sarah', 'Brown', '1995-02-28', 'Female', 'sarah.b@email.com', '555-456-7890', '321 Elm St'),
-('James', 'Davis', '1982-09-05', 'Male', 'j.davis@email.com', '555-567-8901', '654 Maple Dr'),
-('Olivia', 'Miller', '1975-12-18', 'Female', NULL, '555-678-9012', '987 Cedar Ln');
+-- Insert 50 patients
+INSERT INTO Patients (FirstName, LastName, DOB, Gender, Email, PhoneNumber, Address)
+VALUES
+('John', 'Smith', '1985-03-15', 'Male', 'john.smith@email.com', '555-0101', '123 Main St'),
+('Emily', 'Johnson', '1990-07-22', 'Female', 'emily.j@email.com', '555-0102', '456 Oak Ave'),
+('Michael', 'Williams', '1978-11-30', 'Male', 'michael.w@email.com', '555-0103', '789 Pine Rd'),
+('Sarah', 'Brown', '1995-05-18', 'Female', 'sarah.b@email.com', '555-0104', '321 Elm St'),
+('David', 'Jones', '1982-09-25', 'Male', 'david.j@email.com', '555-0105', '654 Maple Dr'),
+('Jennifer', 'Garcia', '1988-12-10', 'Female', 'jennifer.g@email.com', '555-0106', '987 Cedar Ln'),
+('Robert', 'Miller', '1975-04-05', 'Male', 'robert.m@email.com', '555-0107', '135 Birch Blvd'),
+('Lisa', 'Davis', '1992-08-15', 'Female', 'lisa.d@email.com', '555-0108', '246 Willow Way'),
+('James', 'Rodriguez', '1980-01-20', 'Male', 'james.r@email.com', '555-0109', '369 Spruce Cir'),
+('Amanda', 'Martinez', '1993-06-12', 'Female', 'amanda.m@email.com', '555-0110', '579 Redwood Ave'),
+('Thomas', 'Wilson', '1991-02-28', 'Male', 'thomas.w@email.com', '555-0111', '111 Oak St'),
+('Elizabeth', 'Lee', '1987-07-04', 'Female', 'elizabeth.l@email.com', '555-0112', '222 Pine Ave'),
+('Richard', 'Gonzalez', '1979-11-19', 'Male', 'richard.g@email.com', '555-0113', '333 Maple Dr'),
+('Susan', 'Lewis', '1994-05-22', 'Female', 'susan.l@email.com', '555-0114', '444 Elm St'),
+('Joseph', 'Robinson', '1983-09-08', 'Male', 'joseph.r@email.com', '555-0115', '555 Cedar Ln'),
+('Margaret', 'Walker', '1986-01-14', 'Female', 'margaret.w@email.com', '555-0116', '666 Birch Way'),
+('Charles', 'Perez', '1977-12-03', 'Male', 'charles.p@email.com', '555-0117', '777 Redwood Blvd'),
+('Jessica', 'Hall', '1990-04-17', 'Female', 'jessica.h@email.com', '555-0118', '888 Spruce Ave'),
+('Daniel', 'Young', '1981-08-29', 'Male', 'daniel.y@email.com', '555-0119', '999 Willow Dr'),
+('Sarah', 'Allen', '1989-10-31', 'Female', 'sarah.a@email.com', '555-0120', '1010 Oak Cir'),
+('Matthew', 'Sanchez', '1984-06-09', 'Male', 'matthew.s@email.com', '555-0121', '1111 Pine St'),
+('Karen', 'Wright', '1976-02-12', 'Female', 'karen.w@email.com', '555-0122', '1212 Maple Ave'),
+('Christopher', 'King', '1983-07-25', 'Male', 'christopher.k@email.com', '555-0123', '1313 Elm Blvd'),
+('Nancy', 'Scott', '1992-03-18', 'Female', 'nancy.s@email.com', '555-0124', '1414 Cedar Way'),
+('Mark', 'Green', '1979-09-07', 'Male', 'mark.g@email.com', '555-0125', '1515 Birch Dr'),
+('Betty', 'Baker', '1988-05-30', 'Female', 'betty.b@email.com', '555-0126', '1616 Redwood Cir'),
+('Donald', 'Adams', '1974-11-21', 'Male', 'donald.a@email.com', '555-0127', '1717 Spruce St'),
+('Dorothy', 'Nelson', '1985-01-16', 'Female', 'dorothy.n@email.com', '555-0128', '1818 Willow Ave'),
+('Paul', 'Hill', '1980-04-23', 'Male', 'paul.h@email.com', '555-0129', '1919 Oak Blvd'),
+('Helen', 'Ramirez', '1993-08-14', 'Female', 'helen.r@email.com', '555-0130', '2020 Pine Way'),
+('Steven', 'Campbell', '1978-12-05', 'Male', 'steven.c@email.com', '555-0131', '2121 Maple Dr'),
+('Carol', 'Mitchell', '1987-02-19', 'Female', 'carol.m@email.com', '555-0132', '2222 Elm Cir'),
+('Kenneth', 'Roberts', '1982-06-28', 'Male', 'kenneth.r@email.com', '555-0133', '2323 Cedar St'),
+('Donna', 'Carter', '1991-10-11', 'Female', 'donna.c@email.com', '555-0134', '2424 Birch Ave'),
+('Edward', 'Phillips', '1976-03-24', 'Male', 'edward.p@email.com', '555-0135', '2525 Redwood Blvd'),
+('Ruth', 'Evans', '1989-07-09', 'Female', 'ruth.e@email.com', '555-0136', '2626 Spruce Way'),
+('Brian', 'Turner', '1981-01-30', 'Male', 'brian.t@email.com', '555-0137', '2727 Willow Dr'),
+('Sharon', 'Torres', '1994-05-12', 'Female', 'sharon.t@email.com', '555-0138', '2828 Oak Cir'),
+('Ronald', 'Parker', '1977-09-17', 'Male', 'ronald.p@email.com', '555-0139', '2929 Pine St'),
+('Michelle', 'Collins', '1986-11-08', 'Female', 'michelle.c@email.com', '555-0140', '3030 Maple Ave'),
+('Gary', 'Edwards', '1983-04-21', 'Male', 'gary.e@email.com', '555-0141', '3131 Elm Blvd'),
+('Laura', 'Stewart', '1990-08-03', 'Female', 'laura.s@email.com', '555-0142', '3232 Cedar Way'),
+('Jason', 'Flores', '1979-02-14', 'Male', 'jason.f@email.com', '555-0143', '3333 Birch Dr'),
+('Deborah', 'Morris', '1988-06-27', 'Female', 'deborah.m@email.com', '555-0144', '3434 Redwood Cir'),
+('Jeffrey', 'Nguyen', '1975-10-10', 'Male', 'jeffrey.n@email.com', '555-0145', '3535 Spruce St'),
+('Sandra', 'Murphy', '1984-12-23', 'Female', 'sandra.m@email.com', '555-0146', '3636 Willow Ave'),
+('Ryan', 'Rivera', '1992-03-16', 'Male', 'ryan.r@email.com', '555-0147', '3737 Oak Blvd'),
+('Ashley', 'Cook', '1981-07-29', 'Female', 'ashley.c@email.com', '555-0148', '3838 Pine Way'),
+('Nicholas', 'Rogers', '1978-01-11', 'Male', 'nicholas.r@email.com', '555-0149', '3939 Maple Dr'),
+('Kimberly', 'Morgan', '1989-05-24', 'Female', 'kimberly.m@email.com', '555-0150', '4040 Elm Cir');
 
--- 3 Doctors
-INSERT INTO Doctors (FirstName, LastName, Email, PhoneNumber, Specialty, Salary) VALUES
-('Robert', 'Chen', 'dr.chen@hospital.com', '555-111-2222', 'Cardiology', 185000.00),
-('Lisa', 'Patel', 'dr.patel@hospital.com', '555-222-3333', 'Pediatrics', 165000.00),
-('David', 'Wilson', 'dr.wilson@hospital.com', '555-333-4444', 'Orthopedics', 175000.00);
+-- Insert 20 doctors
+INSERT INTO Doctors (FirstName, LastName, Email, PhoneNumber, Specialty, Salary)
+VALUES
+('William', 'Anderson', 'dr.anderson@hospital.com', '555-0201', 'Cardiology', 185000.00),
+('Patricia', 'Taylor', 'dr.taylor@hospital.com', '555-0202', 'Neurology', 195000.00),
+('Christopher', 'Thomas', 'dr.thomas@hospital.com', '555-0203', 'Orthopedics', 175000.00),
+('Jessica', 'Hernandez', 'dr.hernandez@hospital.com', '555-0204', 'Pediatrics', 165000.00),
+('Matthew', 'Moore', 'dr.moore@hospital.com', '555-0205', 'Dermatology', 160000.00),
+('Ashley', 'Martin', 'dr.martin@hospital.com', '555-0206', 'Ophthalmology', 170000.00),
+('Daniel', 'Jackson', 'dr.jackson@hospital.com', '555-0207', 'Gastroenterology', 180000.00),
+('Michelle', 'White', 'dr.white@hospital.com', '555-0208', 'Endocrinology', 175000.00),
+('Andrew', 'Harris', 'dr.harris@hospital.com', '555-0209', 'Pulmonology', 185000.00),
+('Nicole', 'Clark', 'dr.clark@hospital.com', '555-0210', 'Rheumatology', 165000.00),
+('Joshua', 'Rodriguez', 'dr.rodriguez@hospital.com', '555-0211', 'Oncology', 200000.00),
+('Amanda', 'Lewis', 'dr.lewis@hospital.com', '555-0212', 'Psychiatry', 190000.00),
+('Kevin', 'Lee', 'dr.lee@hospital.com', '555-0213', 'Urology', 185000.00),
+('Stephanie', 'Walker', 'dr.walker@hospital.com', '555-0214', 'Nephrology', 180000.00),
+('Brian', 'Hall', 'dr.hall@hospital.com', '555-0215', 'Hematology', 195000.00),
+('Rebecca', 'Allen', 'dr.allen@hospital.com', '555-0216', 'Allergy/Immunology', 170000.00),
+('Timothy', 'Young', 'dr.young@hospital.com', '555-0217', 'Infectious Disease', 175000.00),
+('Laura', 'King', 'dr.king@hospital.com', '555-0218', 'Geriatrics', 165000.00),
+('Gregory', 'Wright', 'dr.wright@hospital.com', '555-0219', 'Sports Medicine', 180000.00),
+('Christine', 'Scott', 'dr.scott@hospital.com', '555-0220', 'Pain Management', 190000.00);
 
--- 8 Appointments (only Scheduled/Completed)
-INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, AppointmentTime, Status, Notes) VALUES
-(1, 1, '2025-06-15', '09:00:00', 'Scheduled', 'Annual checkup'),
-(2, 2, '2025-06-15', '10:30:00', 'Completed', 'Vaccination'),
-(3, 3, '2025-06-16', '14:00:00', 'Scheduled', 'Knee pain'),
-(4, 1, '2025-06-17', '11:30:00', 'Completed', 'Follow-up'),
-(5, 2, '2025-06-18', '13:40:00', 'Completed', 'Child exam'),
-(6, 3, '2025-06-19', '15:30:00', 'Scheduled', 'Back pain'),
-(1, 2, '2025-06-20', '09:30:00', 'Scheduled', 'Consultation'),
-(2, 3, '2025-06-21', '16:00:00', 'Completed', 'X-ray review');
+-- Insert appointments (November 2023 - March 2024)
+-- Varying density - some days full, some light, some empty
+-- Strictly 9AM-4PM in 30-minute increments with lunch break 12-1PM
 
--- 5 Billings (only Paid/Unpaid)
-INSERT INTO Billings (AppointmentID, Amount, PaymentStatus) VALUES
-(2, 150.00, 'Paid'),
-(4, 200.00, 'Paid'),
-(5, 175.00, 'Unpaid'),
-(7, 120.00, 'Paid'),
-(8, 300.00, 'Unpaid');
+-- November 2023
+INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate, AppointmentTime, Status, Notes)
+VALUES
+-- Week 1 (Light)
+(1, 1, '2023-11-01', '09:00:00', 'Completed', 'Annual cardiac checkup'),
+(2, 2, '2023-11-01', '10:30:00', 'Completed', 'Neurological exam'),
+(3, 3, '2023-11-01', '13:30:00', 'Completed', 'Knee pain evaluation'),
+(4, 4, '2023-11-02', '09:30:00', 'Completed', 'Child wellness exam'),
+(5, 5, '2023-11-02', '11:00:00', 'Completed', 'Skin rash examination'),
+
+-- Week 2 (Medium)
+(6, 6, '2023-11-08', '09:00:00', 'Completed', 'Vision test'),
+(7, 7, '2023-11-08', '10:00:00', 'Completed', 'Stomach pain assessment'),
+(8, 8, '2023-11-08', '13:00:00', 'Completed', 'Diabetes management'),
+(9, 9, '2023-11-09', '09:30:00', 'Completed', 'Asthma follow-up'),
+(10, 10, '2023-11-09', '11:00:00', 'Completed', 'Joint pain consultation'),
+(11, 1, '2023-11-09', '14:00:00', 'Completed', 'Cardiac follow-up'),
+(12, 2, '2023-11-10', '10:30:00', 'Completed', 'Migraine evaluation'),
+
+-- Week 3 (Light)
+(13, 3, '2023-11-15', '09:00:00', 'Completed', 'Shoulder injury'),
+(14, 4, '2023-11-16', '13:30:00', 'Completed', 'Vaccination'),
+
+-- Week 4 (Full day on 11/22)
+(15, 5, '2023-11-22', '09:00:00', 'Completed', 'Acne treatment'),
+(16, 5, '2023-11-22', '10:30:00', 'Completed', 'Skin lesion evaluation'),
+(17, 6, '2023-11-22', '11:00:00', 'Completed', 'Glaucoma screening'),
+(18, 7, '2023-11-22', '13:00:00', 'Completed', 'Colonoscopy consultation'),
+(19, 8, '2023-11-22', '14:00:00', 'Completed', 'Thyroid function test'),
+
+-- December 2023
+-- Week 1 (Medium)
+(20, 9, '2023-12-06', '09:00:00', 'Completed', 'Pulmonary function test'),
+(21, 10, '2023-12-06', '10:30:00', 'Completed', 'Arthritis management'),
+(22, 11, '2023-12-07', '09:30:00', 'Completed', 'Oncology consultation'),
+(23, 12, '2023-12-07', '13:00:00', 'Completed', 'Anxiety evaluation'),
+
+-- Week 2 (Light)
+(24, 13, '2023-12-13', '09:00:00', 'Completed', 'Urology exam'),
+(25, 14, '2023-12-14', '13:30:00', 'Completed', 'Kidney function test'),
+
+-- Week 3 (Holiday week - very light)
+(26, 15, '2023-12-20', '10:00:00', 'Completed', 'Blood disorder evaluation'),
+
+-- January 2024
+-- Week 1 (Full week)
+(27, 16, '2024-01-03', '09:00:00', 'Completed', 'Allergy testing'),
+(28, 16, '2024-01-03', '10:30:00', 'Completed', 'Immunotherapy consultation'),
+(29, 17, '2024-01-03', '13:00:00', 'Completed', 'Infection follow-up'),
+(30, 18, '2024-01-04', '09:30:00', 'Completed', 'Geriatric assessment'),
+(31, 19, '2024-01-04', '11:00:00', 'Completed', 'Sports injury evaluation'),
+(32, 20, '2024-01-05', '09:00:00', 'Completed', 'Pain management consultation'),
+
+-- Week 2 (Medium)
+(33, 1, '2024-01-10', '10:00:00', 'Completed', 'Cardiac stress test'),
+(34, 2, '2024-01-10', '13:30:00', 'Completed', 'Neurological follow-up'),
+(35, 3, '2024-01-11', '09:00:00', 'Completed', 'Orthopedic consult'),
+
+-- February 2024
+-- Week 1 (Light)
+(36, 4, '2024-02-07', '09:30:00', 'Completed', 'Pediatric wellness check'),
+(37, 5, '2024-02-08', '11:00:00', 'Completed', 'Dermatology follow-up'),
+
+-- Week 2 (Full day on 2/14)
+(38, 6, '2024-02-14', '09:00:00', 'Completed', 'Vision prescription update'),
+(39, 7, '2024-02-14', '10:30:00', 'Completed', 'Gastrointestinal follow-up'),
+(40, 8, '2024-02-14', '13:00:00', 'Completed', 'Diabetes management'),
+(41, 9, '2024-02-14', '14:00:00', 'Completed', 'Asthma control check'),
+
+-- March 2024
+-- Week 1 (Medium)
+(42, 10, '2024-03-06', '09:00:00', 'Completed', 'Rheumatology follow-up'),
+(43, 11, '2024-03-06', '10:30:00', 'Completed', 'Treatment plan review'),
+(44, 12, '2024-03-07', '13:00:00', 'Completed', 'Medication management'),
+
+-- Week 2 (Light)
+(45, 13, '2024-03-13', '09:30:00', 'Completed', 'Prostate screening'),
+(46, 14, '2024-03-14', '11:00:00', 'Completed', 'Nephrology follow-up'),
+
+-- Week 3 (Scheduled future appointments)
+(47, 15, '2024-03-20', '09:00:00', 'Scheduled', 'Anemia follow-up'),
+(48, 16, '2024-03-20', '10:30:00', 'Scheduled', 'Allergy testing'),
+(49, 17, '2024-03-21', '13:00:00', 'Scheduled', 'Antibiotic review'),
+(50, 18, '2024-03-21', '14:00:00', 'Scheduled', 'Memory evaluation');
+
+-- Insert billing records for completed appointments
+INSERT INTO Billings (AppointmentID, Amount, PaymentStatus)
+SELECT 
+    a.AppointmentID,
+    CASE 
+        WHEN d.Specialty = 'Cardiology' THEN 350.00
+        WHEN d.Specialty = 'Neurology' THEN 300.00
+        WHEN d.Specialty = 'Orthopedics' THEN 275.00
+        WHEN d.Specialty = 'Pediatrics' THEN 200.00
+        WHEN d.Specialty = 'Dermatology' THEN 225.00
+        WHEN d.Specialty = 'Ophthalmology' THEN 250.00
+        WHEN d.Specialty = 'Gastroenterology' THEN 325.00
+        WHEN d.Specialty = 'Endocrinology' THEN 275.00
+        WHEN d.Specialty = 'Pulmonology' THEN 300.00
+        WHEN d.Specialty = 'Rheumatology' THEN 250.00
+        WHEN d.Specialty = 'Oncology' THEN 400.00
+        WHEN d.Specialty = 'Psychiatry' THEN 350.00
+        WHEN d.Specialty = 'Urology' THEN 300.00
+        WHEN d.Specialty = 'Nephrology' THEN 325.00
+        WHEN d.Specialty = 'Hematology' THEN 350.00
+        WHEN d.Specialty = 'Allergy/Immunology' THEN 275.00
+        WHEN d.Specialty = 'Infectious Disease' THEN 300.00
+        WHEN d.Specialty = 'Geriatrics' THEN 225.00
+        WHEN d.Specialty = 'Sports Medicine' THEN 275.00
+        WHEN d.Specialty = 'Pain Management' THEN 350.00
+        ELSE 200.00
+    END AS Amount,
+    CASE 
+        WHEN RAND() < 0.7 THEN 'Paid' 
+        ELSE 'Unpaid' 
+    END AS PaymentStatus
+FROM 
+    Appointments a
+JOIN 
+    Doctors d ON a.DoctorID = d.DoctorID
+WHERE 
+    a.Status = 'Completed';
